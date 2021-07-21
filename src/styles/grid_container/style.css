@@ -3,7 +3,7 @@
   flex-direction: column;
   width: 500px;
   height: 500px;
-  margin: 0 auto;
+  margin: 100px auto 0;
   background: #333;
   border: 1px solid #000;
 }

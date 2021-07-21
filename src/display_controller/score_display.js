@@ -1,5 +1,7 @@
+import '../styles/score_container/style.css';
+
 const scoreDisplay = (() => {
-  const generateScoreDisplay = score => {
+  const generate = score => {
     const scoreContainer = document.createElement('p');
     
     scoreContainer.id = 'score-container';
@@ -8,11 +10,11 @@ const scoreDisplay = (() => {
     return scoreContainer;
   }
 
-  const updateScoreDisplay = score => {
+  const update = score => {
     document.querySelector('#score-container').textContent = `Total Points: ${score}`;
   }
 
-  return { generateScoreDisplay, updateScoreDisplay }
+  return { generate, update }
 })();
 
 export default scoreDisplay;

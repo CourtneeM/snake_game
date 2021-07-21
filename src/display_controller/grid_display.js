@@ -1,7 +1,7 @@
 import '../styles/grid_container/style.css';
 
 const gridDisplay = (() => {
-  const generateGrid = gridSize => {
+  const generate = gridSize => {
     const gridContainer = document.createElement('div');
     gridContainer.id = 'grid-container';
 
@@ -20,7 +20,7 @@ const gridDisplay = (() => {
     return gridContainer;
   }
 
-  return { generateGrid }
+  return { generate }
 })();
 
 export default gridDisplay;

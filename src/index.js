@@ -2,6 +2,7 @@ import gridDisplay from './display_controller/grid_display';
 import snakeDisplay from './display_controller/snake_display';
 import appleDisplay from './display_controller/apple_display';
 import scoreDisplay from './display_controller/score_display';
+import generateGameoverDisplay from './display_controller/gameover_display';
 import createSnake from "./create_snake";
 import createGrid from "./create_grid";
 import createApple from "./create_apple";
@@ -11,8 +12,9 @@ const snake = createSnake();
 const apple = createApple();
 let score = 0;
 
-document.querySelector('body').appendChild(gridDisplay.generateGrid(grid.getGridSize()));
-document.querySelector('body').appendChild(scoreDisplay.generateScoreDisplay(score));
+const body = document.querySelector('body');
+body.appendChild(gridDisplay.generate(grid.getGridSize()));
+body.appendChild(scoreDisplay.generate(score));
 const gridContainer = document.querySelector('#grid-container');
 
 
@@ -64,6 +66,7 @@ const gameplay = (() => {
         || currentHeadCol < 0
         || grid.getGrid()[currentHeadRow][currentHeadCol] === 'S') {
       clearInterval(gameInterval);
+      body.appendChild(generateGameoverDisplay());
       return;
     }
 
@@ -74,7 +77,7 @@ const gameplay = (() => {
     if (currentHeadRow === apple.getCoordinates()[0] && currentHeadCol === apple.getCoordinates()[1]) {
       snake.incrementLength();
       score += 1;
-      scoreDisplay.updateScoreDisplay(score);
+      scoreDisplay.update(score);
 
       appleDisplay.removeApple(gridContainer, apple.getCoordinates());
 
@@ -90,5 +93,5 @@ const gameplay = (() => {
 
       snakeDisplay.removeSnakePiece(gridContainer, [removedRow, removedCol]);
     }
-  }, 200);
+  }, 150);
 })();
