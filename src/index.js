@@ -1,6 +1,7 @@
 import gridDisplay from './display_controller/grid_display';
 import snakeDisplay from './display_controller/snake_display';
 import appleDisplay from './display_controller/apple_display';
+import scoreDisplay from './display_controller/score_display';
 import createSnake from "./create_snake";
 import createGrid from "./create_grid";
 import createApple from "./create_apple";
@@ -11,6 +12,7 @@ const apple = createApple();
 let score = 0;
 
 document.querySelector('body').appendChild(gridDisplay.generateGrid(grid.getGridSize()));
+document.querySelector('body').appendChild(scoreDisplay.generateScoreDisplay(score));
 const gridContainer = document.querySelector('#grid-container');
 
 
@@ -72,10 +74,12 @@ const gameplay = (() => {
     if (currentHeadRow === apple.getCoordinates()[0] && currentHeadCol === apple.getCoordinates()[1]) {
       snake.incrementLength();
       score += 1;
+      scoreDisplay.updateScoreDisplay(score);
 
       appleDisplay.removeApple(gridContainer, apple.getCoordinates());
 
       apple.newCoordinates(snake.getCoordinates(), grid.getGridSize());
+
       let [newAppleRow, newAppleCol] = apple.getCoordinates();
       grid.getGrid()[newAppleRow][newAppleCol] = 'A';
 
