@@ -50,7 +50,11 @@ const gameLoop = (() => {
         break;
     }
 
-    if (currentHeadRow > grid.length - 1 || currentHeadRow < 0 || currentHeadCol > grid.length - 1 || currentHeadCol < 0) {
+    if (grid[currentHeadRow][currentHeadCol] === 'S'
+        || currentHeadRow > grid.length - 1
+        || currentHeadRow < 0
+        || currentHeadCol > grid.length - 1
+        || currentHeadCol < 0) {
       clearInterval(gameInterval);
       return;
     }
@@ -61,7 +65,7 @@ const gameLoop = (() => {
     if (currentHeadRow === apple.getCoordinates()[0] && currentHeadCol === apple.getCoordinates()[1]) {
       snake.incrementLength();
       score += 1;
-      
+
       apple.newCoordinates(snake.getCoordinates());
       let [newAppleRow, newAppleCol] = apple.getCoordinates();
       grid[newAppleRow][newAppleCol] = 'A'
@@ -72,5 +76,5 @@ const gameLoop = (() => {
     }
 
     console.log(grid);
-  }, 1000);
+  }, 3000);
 })();
