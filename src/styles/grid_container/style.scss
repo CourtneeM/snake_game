@@ -1,0 +1,18 @@
+#grid-container {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
+  background: #333;
+  border: 1px solid #000;
+
+  .row-container {
+    display: flex;
+  }
+
+  .col-container {
+    width: 29px;
+    height: 29px;
+  }
+}

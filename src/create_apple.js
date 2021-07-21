@@ -7,8 +7,8 @@ const createApple = () => {
     let col;
 
     while (invalidCoordinates) {
-      row = Math.floor(Math.random() * gridSize - 1);
-      col = Math.floor(Math.random() * gridSize - 1);
+      row = Math.floor(Math.random() * gridSize);
+      col = Math.floor(Math.random() * gridSize);
 
       invalidCoordinates = snakeCoordinates.filter(coordinate => {
         const [snakeRow, snakeCol] = coordinate;

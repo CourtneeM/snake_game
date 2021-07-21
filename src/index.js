@@ -1,3 +1,6 @@
+import gridDisplay from './display_controller/grid_display';
+import snakeDisplay from './display_controller/snake_display';
+import appleDisplay from './display_controller/apple_display';
 import createSnake from "./create_snake";
 import createGrid from "./create_grid";
 import createApple from "./create_apple";
@@ -7,13 +10,20 @@ const snake = createSnake();
 const apple = createApple();
 let score = 0;
 
-const gameLoop = (() => {
+document.querySelector('body').appendChild(gridDisplay.generateGrid(grid.getGridSize()));
+const gridContainer = document.querySelector('#grid-container');
+
+
+const gameplay = (() => {
   const [snakeStartingRow, snakeStartingCol] = snake.getCoordinates()[0];
   let [appleRow, appleCol] = apple.getCoordinates();
   let direction = snake.getDirection();
 
   grid.getGrid()[snakeStartingRow][snakeStartingCol] = 'S';
   grid.getGrid()[appleRow][appleCol] = 'A';
+
+  snakeDisplay.addSnakePiece(gridContainer, snake.getCoordinates());
+  appleDisplay.addApple(gridContainer, [appleRow, appleCol]);
 
   document.addEventListener('keydown', e => {
     if (direction === 'right' || direction === 'left') {
@@ -46,29 +56,35 @@ const gameLoop = (() => {
         break;
     }
 
-    if (grid.getGrid()[currentHeadRow][currentHeadCol] === 'S'
-        || currentHeadRow > grid.getGrid().length - 1
+    if (currentHeadRow > grid.getGrid().length - 1
         || currentHeadRow < 0
         || currentHeadCol > grid.getGrid().length - 1
-        || currentHeadCol < 0) {
+        || currentHeadCol < 0
+        || grid.getGrid()[currentHeadRow][currentHeadCol] === 'S') {
       clearInterval(gameInterval);
       return;
     }
 
     snake.addCoordinate([currentHeadRow, currentHeadCol]);
     grid.getGrid()[currentHeadRow][currentHeadCol] = 'S';
+    snakeDisplay.addSnakePiece(gridContainer, snake.getCoordinates());
 
     if (currentHeadRow === apple.getCoordinates()[0] && currentHeadCol === apple.getCoordinates()[1]) {
       snake.incrementLength();
       score += 1;
 
+      appleDisplay.removeApple(gridContainer, apple.getCoordinates());
+
       apple.newCoordinates(snake.getCoordinates(), grid.getGridSize());
       let [newAppleRow, newAppleCol] = apple.getCoordinates();
-      grid.getGrid()[newAppleRow][newAppleCol] = 'A'
+      grid.getGrid()[newAppleRow][newAppleCol] = 'A';
 
+      appleDisplay.addApple(gridContainer, [newAppleRow, newAppleCol]);
     } else {
       let [removedRow, removedCol] = snake.removeOldCoordinate();
       grid.getGrid()[removedRow][removedCol] = '';
+
+      snakeDisplay.removeSnakePiece(gridContainer, [removedRow, removedCol]);
     }
-  }, 3000);
+  }, 200);
 })();
