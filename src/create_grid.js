@@ -12,7 +12,10 @@ const createGrid = () => {
     grid.push(row);
   }
 
-  return grid;
+  const getGrid = () => grid;
+  const getGridSize = () => gridSize;
+
+  return { getGrid, getGridSize }
 }
 
 export default createGrid;

@@ -1,14 +1,14 @@
 const createApple = () => {
   let coordinates = [8, 10];
 
-  const newCoordinates = snakeCoordinates => {
+  const newCoordinates = (snakeCoordinates, gridSize) => {
     let invalidCoordinates = true;
     let row;
     let col;
 
     while (invalidCoordinates) {
-      row = Math.floor(Math.random() * 16);
-      col = Math.floor(Math.random() * 16);
+      row = Math.floor(Math.random() * gridSize - 1);
+      col = Math.floor(Math.random() * gridSize - 1);
 
       invalidCoordinates = snakeCoordinates.filter(coordinate => {
         const [snakeRow, snakeCol] = coordinate;

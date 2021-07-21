@@ -7,17 +7,13 @@ const snake = createSnake();
 const apple = createApple();
 let score = 0;
 
-// take new coordinates and add to snake coordinates, remove old coorindates
-// take new coordinates and add marker on grid
-// take removed coordinates and remove marker from grid
-
 const gameLoop = (() => {
   const [snakeStartingRow, snakeStartingCol] = snake.getCoordinates()[0];
   let [appleRow, appleCol] = apple.getCoordinates();
   let direction = snake.getDirection();
 
-  grid[snakeStartingRow][snakeStartingCol] = 'S';
-  grid[appleRow][appleCol] = 'A';
+  grid.getGrid()[snakeStartingRow][snakeStartingCol] = 'S';
+  grid.getGrid()[appleRow][appleCol] = 'A';
 
   document.addEventListener('keydown', e => {
     if (direction === 'right' || direction === 'left') {
@@ -50,31 +46,29 @@ const gameLoop = (() => {
         break;
     }
 
-    if (grid[currentHeadRow][currentHeadCol] === 'S'
-        || currentHeadRow > grid.length - 1
+    if (grid.getGrid()[currentHeadRow][currentHeadCol] === 'S'
+        || currentHeadRow > grid.getGrid().length - 1
         || currentHeadRow < 0
-        || currentHeadCol > grid.length - 1
+        || currentHeadCol > grid.getGrid().length - 1
         || currentHeadCol < 0) {
       clearInterval(gameInterval);
       return;
     }
 
     snake.addCoordinate([currentHeadRow, currentHeadCol]);
-    grid[currentHeadRow][currentHeadCol] = 'S';
+    grid.getGrid()[currentHeadRow][currentHeadCol] = 'S';
 
     if (currentHeadRow === apple.getCoordinates()[0] && currentHeadCol === apple.getCoordinates()[1]) {
       snake.incrementLength();
       score += 1;
 
-      apple.newCoordinates(snake.getCoordinates());
+      apple.newCoordinates(snake.getCoordinates(), grid.getGridSize());
       let [newAppleRow, newAppleCol] = apple.getCoordinates();
-      grid[newAppleRow][newAppleCol] = 'A'
+      grid.getGrid()[newAppleRow][newAppleCol] = 'A'
 
     } else {
       let [removedRow, removedCol] = snake.removeOldCoordinate();
-      grid[removedRow][removedCol] = '';
+      grid.getGrid()[removedRow][removedCol] = '';
     }
-
-    console.log(grid);
   }, 3000);
 })();
