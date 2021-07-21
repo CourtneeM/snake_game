@@ -1,0 +1,14 @@
+#gameover-container {
+  position: absolute;
+  top: 210px;
+  left: 40%;
+  right: 40%;
+  font-size: 4rem;
+  font-weight: 600;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+}
+
+/*# sourceMappingURL=style.css.map */
